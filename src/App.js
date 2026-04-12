@@ -1,5 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from 'react-router-dom';
 import BasicInfo from './pages/BasicInfo';
 import Work from './pages/Work';
 import Skills from './pages/Skills';
@@ -21,7 +27,12 @@ function Navbar() {
           { path: '/setup', label: 'Dev Setup' },
         ].map(({ path, label }) => (
           <li key={path}>
-            <Link to={path} className={location.pathname === path ? 'active' : ''}>{label}</Link>
+            <Link
+              to={path}
+              className={location.pathname === path ? 'active' : ''}
+            >
+              {label}
+            </Link>
           </li>
         ))}
       </ul>
