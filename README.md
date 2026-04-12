@@ -1,87 +1,87 @@
-# Getting Started with Create React App
+# Jasdeep Kaur - Portfolio Site (Assignment 14)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+A multi-page React portfolio website built with Create React App, containerized with Docker, and served via Nginx at localhost:5575. The project includes ESLint, Prettier, Husky pre-commit hooks, Storybook, and a GitHub Actions CI/CD pipeline.
 
-## Available Scripts
+## Prerequisites
+- Docker must be installed and running
+- Node.js v18+ (for local development)
+- Git
 
-In the project directory, you can run:
+## How to Run at localhost:5575
 
-### `npm start`
+Step 1 - Clone the repository
+git clone git@github.com:jasdeepkaur2/kaur_jasdeep_coding_assignment14.git
+cd kaur_jasdeep_coding_assignment14
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Step 2 - Build the Docker image
+docker build -t kaur_jasdeep_coding_assignment14 .
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Step 3 - Run the container
+docker run -d -p 5575:5575 --name kaur_jasdeep_coding_assignment14 kaur_jasdeep_coding_assignment14
 
-### `npm test`
+Step 4 - Open in browser
+Visit: http://localhost:5575
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Stop the container
+docker stop kaur_jasdeep_coding_assignment14
 
-### `npm run build`
+Remove the container
+docker rm kaur_jasdeep_coding_assignment14
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Why Docker?
+Docker containerizes the app so it runs the same way on any machine regardless of the operating system or environment. No need to install Node.js or any dependencies on the host machine - everything is inside the container.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## How the Dockerfile Works
+- Stage 1 (Build): Uses node:18-alpine to install dependencies and run npm run build to create an optimized production build of the React app
+- Stage 2 (Serve): Uses nginx:alpine to serve the static build files. Alpine images are used because they are lightweight and secure
+- The working directory inside the container is /kaur_jasdeep_final_site
+- Nginx listens on port 5575 and serves the React build folder
+- This is called a multi-stage build - it keeps the final image small by not including Node.js in the production image
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Why Nginx?
+Nginx is a fast, lightweight web server used to serve the static React production build files. It handles the try_files directive so React Router navigation works correctly inside the container.
 
-### `npm run eject`
+## What is a Production Build?
+npm run build creates an optimized version of the React app - it minifies JavaScript, removes development warnings, and bundles all files for best performance. This is what gets copied into the Docker image.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## CI/CD Pipeline (GitHub Actions)
+The .github/workflows/ci.yml file runs automatically on every push to GitHub:
+- Runs ESLint to check for code errors
+- Runs Prettier to check code formatting
+- Runs unit tests with Jest
+This ensures code quality is maintained on every commit.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## What is ESLint?
+ESLint is a static code analysis tool that finds and fixes problems in JavaScript code. It is configured in package.json and runs automatically before every commit via Husky.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## What is Prettier?
+Prettier is a code formatter that enforces consistent style (semicolons, single quotes, indentation). Configured in .prettierrc file.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## What is Husky?
+Husky runs scripts before git commits using pre-commit hooks. In this project it runs lint-staged which runs Prettier on staged files before every commit, ensuring no badly formatted code gets committed.
 
-## Learn More
+## What is Storybook?
+Storybook is a tool for developing and documenting UI components in isolation. Run it with: npm run storybook
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Portfolio Sections
+- About: Personal info, professional summary, work experience, education
+- Work: Academic and course projects with images, descriptions, tech stack, and GitHub links
+- Skills: Languages, frameworks, tools, Microsoft ecosystem, professional skills
+- Resources: Favourite learning resources with icons, descriptions, and links
+- Dev Setup: VS Code config, terminal setup, preferred font, development stack
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Local Development (without Docker)
+npm install --legacy-peer-deps
+npm start
+Visit: http://localhost:3000
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-# these go INSIDE the README so your instructor can run them
-docker build -t smith_john_coding_assignment14 .
-docker run -d -p 5575:5575 --name smith_john_coding_assignment14 smith_john_coding_assignment14
-# then visit http://localhost:5575
-
-# Stop the container
-docker stop Kaur_Jasdeep_coding_assignment14
-
-# Remove the container (to re-run fresh)
-docker rm Kaur_Jasdeep_coding_assignment14
-
-# See all containers
-docker ps -a
-
-# See all images
-docker images
+## Tech Stack
+- React 18 (Create React App)
+- React Router DOM (multi-page navigation)
+- Docker + Nginx (containerization and serving)
+- ESLint (code linting)
+- Prettier (code formatting)
+- Husky + lint-staged (pre-commit hooks)
+- Storybook (component documentation)
+- GitHub Actions (CI/CD pipeline)
