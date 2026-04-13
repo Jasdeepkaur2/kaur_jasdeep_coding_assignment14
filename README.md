@@ -3,6 +3,8 @@
 ## Overview
 A multi-page React portfolio website built with Create React App, containerized with Docker, and served via Nginx at localhost:5575. The project includes ESLint, Prettier, Husky pre-commit hooks, Storybook, and a GitHub Actions CI/CD pipeline.
 
+It uses a multi-stage build. Stage 1 uses node:18-alpine to install dependencies and run npm run build to create the production build. Stage 2 uses nginx:alpine to serve those static files. Alpine images are lightweight and secure. The working directory is /kaur_jasdeep_final_site.
+
 ## Prerequisites
 - Docker must be installed and running
 - Node.js v18+ (for local development)
@@ -31,6 +33,8 @@ docker rm kaur_jasdeep_coding_assignment14
 
 ## Why Docker?
 Docker containerizes the app so it runs the same way on any machine regardless of the operating system or environment. No need to install Node.js or any dependencies on the host machine - everything is inside the container.
+
+Multi-stage build means using two FROM statements. The first stage builds the app with Node.js. The second stage only copies the finished build files into Nginx — it does NOT include Node.js. This keeps the final image small and secure.
 
 ## How the Dockerfile Works
 - Stage 1 (Build): Uses node:18-alpine to install dependencies and run npm run build to create an optimized production build of the React app
