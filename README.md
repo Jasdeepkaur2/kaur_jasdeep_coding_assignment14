@@ -45,7 +45,12 @@ Multi-stage build means using two FROM statements. The first stage builds the ap
 
 ## Why Nginx?
 Nginx is a fast, lightweight web server used to serve the static React production build files. It handles the try_files directive so React Router navigation works correctly inside the container.
-
+What is Nginx and why use it?
+Nginx is a fast, lightweight web server. I use it to serve the static React build files inside the Docker container. It's much lighter than running a full Node.js server just to serve static files.
+What does try_files do in nginx.conf?
+try_files $uri /index.html tells Nginx — if the requested file doesn't exist, serve index.html instead. This is needed for React Router so refreshing a page like /skills doesn't return a 404.
+Why nginx:alpine and node:18-alpine?
+Alpine Linux images are very small — only a few MB. This keeps the Docker image lightweight, faster to download, and has a smaller attack surface for security.
 ## What is a Production Build?
 npm run build creates an optimized version of the React app - it minifies JavaScript, removes development warnings, and bundles all files for best performance. This is what gets copied into the Docker image.
 
