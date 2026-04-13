@@ -56,11 +56,14 @@ The .github/workflows/ci.yml file runs automatically on every push to GitHub:
 - Runs unit tests with Jest
 This ensures code quality is maintained on every commit.
 
+When I push code to the main branch, GitHub Actions automatically triggers the ci.yml workflow. It spins up an Ubuntu server, installs Node.js 18, installs all dependencies, then runs 3 checks — Prettier to verify formatting, ESLint to check for code errors, and Jest to run the unit tests. If all 3 pass, the pipeline succeeds
+
 ## What is ESLint?
 ESLint is a static code analysis tool that finds and fixes problems in JavaScript code. It is configured in package.json and runs automatically before every commit via Husky.
 
 ## What is Prettier?
 Prettier is a code formatter that enforces consistent style (semicolons, single quotes, indentation). Configured in .prettierrc file.
+Husky adds a pre-commit hook in the .husky folder. Every time I run git commit, Husky automatically triggers lint-staged which runs Prettier on all staged files before the commit goes through. So formatting is always enforced without me having to remember to run it manually."
 
 ## What is Husky?
 Husky runs scripts before git commits using pre-commit hooks. In this project it runs lint-staged which runs Prettier on staged files before every commit, ensuring no badly formatted code gets committed.
